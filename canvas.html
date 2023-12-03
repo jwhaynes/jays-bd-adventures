@@ -25,6 +25,36 @@
         requestAnimationFrame(update);
     }
 
+    var keys = {};
+
+    window.addEventListener("keydown", function(event) {
+        keys[event.code] = true;
+    });
+
+    window.addEventListener("keyup", function(event) {
+        keys[event.code] = false;
+    });
+
+    function update() {
+        if (keys["ArrowLeft"]) player.x -= 2;
+        if (keys["ArrowRight"]) player.x += 2;
+
+        player.y += player.dy;
+
+        // Collision detection
+        if (player.y + player.height > platform.y) {
+            player.y = platform.y - player.height;
+        }
+
+        // Redraw game
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+        ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+
+        requestAnimationFrame(update);
+    }
+
+
     update();
 </script>
 </body>
