@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="gameCanvas" width="480" height="320"></canvas>
+<script>
+    var canvas = document.getElementById("gameCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var player = { x: 50, y: 50, width: 20, height: 20, dy: 2 };
+    var platform = { x: 0, y: canvas.height - 20, width: canvas.width, height: 20 };
+
+    function update() {
+        player.y += player.dy;
+
+        // Collision detection
+        if (player.y + player.height > platform.y) {
+            player.y = platform.y - player.height;
+        }
+
+        // Redraw game
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(player.x, player.y, player.width, player.height);
+        ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+
+        requestAnimationFrame(update);
+    }
+
+    update();
+</script>
+</body>
+</html>
